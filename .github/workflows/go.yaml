@@ -25,7 +25,7 @@ jobs:
       - name: build by all.bash
         run: |
           export GOROOT_BOOTSTRAP=`pwd`
-          export CGO_ENABLE=1
+          export CGO_ENABLE=0
           go env
           ls 
           pwd
@@ -34,9 +34,9 @@ jobs:
           ls -al
       - name: Build the Docker image
         run: |
-          docker build . --file Dockerfile --tag asppj/go-builder:18.2faketime
+          docker build . --file Dockerfile --tag asppj/go-builder:18.3faketime
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-          docker push asppj/go-builder:18.2faketime
+          docker push asppj/go-builder:18.3faketime
         env:
           DOCKER_USERNAME: ${{secrets.DOCKER_USER}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASS}}
