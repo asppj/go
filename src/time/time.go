@@ -75,6 +75,12 @@
 //
 package time
 
+/*
+   #include <time.h>
+*/
+
+import "C"
+
 import (
 	"errors"
 	_ "unsafe" // for go:linkname
@@ -1070,13 +1076,14 @@ var startNano int64 = runtimeNano() - 1
 
 // Now returns the current local time.
 func Now() Time {
-	sec, nsec, mono := now()
-	mono -= startNano
-	sec += unixToInternal - minWall
-	if uint64(sec)>>33 != 0 {
-		return Time{uint64(nsec), sec + minWall, Local}
-	}
-	return Time{hasMonotonic | uint64(sec)<<nsecShift | uint64(nsec), mono, Local}
+	// sec, nsec, mono := now()
+	// mono -= startNano
+	// sec += unixToInternal - minWall
+	// if uint64(sec)>>33 != 0 {
+	// 	return Time{uint64(nsec), sec + minWall, Local}
+	// }
+	// return Time{hasMonotonic | uint64(sec)<<nsecShift | uint64(nsec), mono, Local}
+	return Unix(int64(C.time(nil)), 0)
 }
 
 func unixTime(sec int64, nsec int32) Time {

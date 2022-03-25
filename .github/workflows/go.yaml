@@ -1,0 +1,46 @@
+name: Go
+
+on:
+  push:
+    branches: [ 18faketime ]
+  pull_request:
+    branches: [ 18faketime ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Set up Go 1.x
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.18
+        id: go
+
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Get dependencies
+        run: |
+          export GOROOT_BOOTSTRAP=`pwd`
+          export CGO_ENABLE=1
+          go env
+          ls 
+          pwd
+          apt-get install bison gcc libc6-dev ed gawk make
+
+          cd src && ./all.bash && cd -
+          ls -al
+      - name: Build the Docker image
+        run: |
+          docker build . --file Dockerfile --tag asppj/go-builder:18faketime
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          docker push asppj/go-builder:18faketime
+        env:
+          DOCKER_USERNAME: ${{secrets.DOCKER_USER}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASS}}
+
+
+
