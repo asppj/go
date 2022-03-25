@@ -875,7 +875,7 @@ func Since(t Time) Duration {
 	var now Time
 	if t.wall&hasMonotonic != 0 {
 		// Common case optimization: if t has monotonic time, then Sub will use only it.
-		now = Time{hasMonotonic, runtimeNano() - startNano, nil}
+		now = Time{hasMonotonic, fakeRuntimeNano() - startNano, nil}
 	} else {
 		now = Now()
 	}
@@ -888,7 +888,7 @@ func Until(t Time) Duration {
 	var now Time
 	if t.wall&hasMonotonic != 0 {
 		// Common case optimization: if t has monotonic time, then Sub will use only it.
-		now = Time{hasMonotonic, runtimeNano() - startNano, nil}
+		now = Time{hasMonotonic, fakeRuntimeNano() - startNano, nil}
 	} else {
 		now = Now()
 	}
@@ -1066,7 +1066,7 @@ func runtimeNano() int64
 // which appears to have a default resolution of 15ms),
 // we avoid ever reporting a monotonic time of 0.
 // (Callers may want to use 0 as "time not set".)
-var startNano int64 = runtimeNano() - 1
+var startNano int64 = fakeRuntimeNano() - 1
 
 // Now returns the current local time.
 func Now() Time {

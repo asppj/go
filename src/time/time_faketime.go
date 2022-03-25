@@ -20,14 +20,20 @@ var (
 	fakeTimeDiff int64 = 0
 )
 
-func fakeNow() (sec int64, nsec int32, mono int64) {
+func init() {
 	fakeOnce.Do(func() {
-		ft := os.Getenv("FAKETIME")
-		fakeTimeDiff = parseFakeTime(ft)
-
+		if os.Getenv("FAKETIME") != "" {
+			fakeTimeDiff = parseFakeTime(os.Getenv("FAKETIME"))
+		}
 	})
+}
+func fakeNow() (sec int64, nsec int32, mono int64) {
 	_, _, mono = now()
 	return diffNow(mono + fakeTimeDiff)
+}
+
+func fakeRuntimeNano() int64 {
+	return runtimeNano() + fakeTimeDiff
 }
 
 func diffNow(faketime int64) (sec int64, nsec int32, mono int64) {
