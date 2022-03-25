@@ -29,7 +29,6 @@ jobs:
           go env
           ls 
           pwd
-#          apt-get install bison gcc libc6-dev ed gawk make
 
           cd src && ./all.bash && cd -
           ls -al
