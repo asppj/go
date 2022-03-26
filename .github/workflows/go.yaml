@@ -34,9 +34,9 @@ jobs:
           ls -al
       - name: Build the Docker image
         run: |
-          docker build . --file Dockerfile --tag asppj/go-builder:18.3faketime
+          docker build . --file Dockerfile --tag asppj/go-builder:18.4faketime
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-          docker push asppj/go-builder:18.3faketime
+          docker push asppj/go-builder:18.4faketime
         env:
           DOCKER_USERNAME: ${{secrets.DOCKER_USER}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASS}}

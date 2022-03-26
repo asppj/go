@@ -4,6 +4,10 @@ var (
 	demFakeTime int64 = 0
 )
 
+func SetDemFakeTime(fd int64) {
+	demFakeTime = fd
+}
+
 func fakeNow() (sec int64, nsec int32, mono int64) {
 	_, _, mono = now()
 	return diffNow(mono + demFakeTime)
