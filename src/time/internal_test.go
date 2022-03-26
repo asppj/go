@@ -43,7 +43,7 @@ func CheckRuntimeTimerPeriodOverflow() {
 	// immediately. The public Timer interface would require waiting for
 	// the entire period before the first update.
 	r := &runtimeTimer{
-		when:   fakeRuntimeNano(),
+		when:   runtimeNano(),
 		period: 1<<63 - 1,
 		f:      empty,
 		arg:    nil,
