@@ -41,5 +41,22 @@ jobs:
           DOCKER_USERNAME: ${{secrets.DOCKER_USER}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASS}}
 
+      - name: release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: "./**"
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+
+      - name: Create release
+        uses: goreleaser/goreleaser-action@v2
+        with:
+          workdir: cmd
+          version: latest
+          args: release --rm-dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+
 
 
