@@ -4,7 +4,7 @@
 #-------------------------------------------------------------------------------------------------------------
 
 FROM golang:1.18
-ENV GOPROXY https://goproxy.cn,direct
+#ENV GOPROXY https://goproxy.cn,direct
 
 
 # Install git, process tools, lsb-release (common in install instructions for CLIs)
@@ -15,8 +15,9 @@ RUN apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
-ENV GOROOT /go
+#ENV GOROOT /go
 ADD . $GOROOT
-
+ADD bin $GOPATH/bin
+ADD pkg $GOPATH/bin
 # Set the default shell to bash instead of sh
 
