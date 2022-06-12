@@ -8,12 +8,12 @@ FROM kubesphere/builder-go:v3.2.0-1.16
 
 
 # Install git, process tools, lsb-release (common in install instructions for CLIs)
-RUN apt-get update && apt-get -y install git procps lsb-release
+# RUN apt-get update && apt-get -y install git procps lsb-release
 
-# Clean up
-RUN apt-get autoremove -y \
-    && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/*
+# # Clean up
+# RUN apt-get autoremove -y \
+#     && apt-get clean -y \
+#     && rm -rf /var/lib/apt/lists/*
 
 #ENV GOROOT /go
 ADD . $GOROOT
