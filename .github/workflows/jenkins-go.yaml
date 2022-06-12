@@ -1,0 +1,47 @@
+name: Jenkins-Go
+
+on:
+  push:
+    branches: [ 18faketime ]
+  pull_request:
+    branches: [ 18faketime ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Set up Go 1.x
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.18
+        id: go
+
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: build by all.bash
+        run: |
+          export GOROOT_BOOTSTRAP=`pwd`
+          export CGO_ENABLE=0
+          go env
+          ls 
+          pwd
+
+          cd src && ./all.bash && cd -
+          ls -al
+      - name: Build the Docker image
+        run: |
+          docker build . --file Dockerfile.jenkins-agent --tag asppj/go-builder:18.jenkins-agent
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          docker push asppj/go-builder:18.jenkins-agent
+        env:
+          DOCKER_USERNAME: ${{secrets.DOCKER_USER}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASS}}
+
+
+
+
+
