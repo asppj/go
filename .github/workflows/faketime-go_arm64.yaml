@@ -39,7 +39,7 @@ jobs:
           cd src && ./all.bash && cd -
           ls -al
         env:
-          GOARCH: ${{matrix.arch}}
+          GOARCH: ${{ matrix.arch }}
       - name: Build the Docker image
         run: |
 #          docker build . --file Dockerfile --tag asppj/go-builder:18.5faketime
@@ -49,7 +49,7 @@ jobs:
         env:
           DOCKER_USERNAME: ${{secrets.DOCKER_USER}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASS}}
-          GOARCH: ${{matrix.arch}}
+          GOARCH: ${{ matrix.arch }}
 
       # - name: Create Release
       #   id: create_release
