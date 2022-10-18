@@ -31,14 +31,12 @@ jobs:
         run: |
           export GOROOT_BOOTSTRAP=`pwd`
           export CGO_ENABLE=0
-          uname -a
           go env
           ls 
           pwd
-          env
+
           cd src && ./all.bash && cd -
           ls -al
-
       - name: Build the Docker image
         run: |
 #          docker build . --file Dockerfile --tag asppj/go-builder:18.5faketime
