@@ -15,7 +15,12 @@ jobs:
         os: [ ubuntu-20.04 ]
         arch: [ arm64, amd64 ]
     steps:
-
+      - name: Set up QEMU
+        id: qemu
+        uses: docker/setup-qemu-action@v1
+        with:
+          image: tonistiigi/binfmt:latest
+          platforms: all
       - name: Set up Go 1.x
         uses: actions/setup-go@v2
         with:
