@@ -4,12 +4,13 @@
 #-------------------------------------------------------------------------------------------------------------
 
 FROM golang:1.18
-ENV GOPROXY https://goproxy.cn,direct
+#ENV GOPROXY https://goproxy.cn,direct
 
 
 # Install git, process tools, lsb-release (common in install instructions for CLIs)
-RUN sed -i 's/dl-cdn.alpinelinux.org/opentuna.cn/g' /etc/apk/repositories && apk update --no-cache && \
-    apk add --no-cache ca-certificates tzdata  git procps  lsb-release build-base openssh curl bash &&  rm -rf /var/cache/apk/*
+RUN apt-get update && apt-get -y install git procps lsb-release build-base openssh bash curl tzdata ca-certificates
+#RUN mkdir base && sed -i 's/dl-cdn.alpinelinux.org/opentuna.cn/g' /etc/apk/repositories && apk update --no-cache && \
+#    apk add --no-cache ca-certificates tzdata  git procps  lsb-release build-base openssh curl bash &&  rm -rf /var/cache/apk/*
 
 # Clean up
 RUN apt-get autoremove -y \
