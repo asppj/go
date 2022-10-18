@@ -8,7 +8,7 @@ ENV GOPROXY https://goproxy.cn,direct
 
 
 # Install git, process tools, lsb-release (common in install instructions for CLIs)
-RUN mkdir base && sed -i 's/dl-cdn.alpinelinux.org/opentuna.cn/g' /etc/apk/repositories && apk update --no-cache && \
+RUN sed -i 's/dl-cdn.alpinelinux.org/opentuna.cn/g' /etc/apk/repositories && apk update --no-cache && \
     apk add --no-cache ca-certificates tzdata  git procps  lsb-release build-base openssh curl bash &&  rm -rf /var/cache/apk/*
 
 # Clean up
