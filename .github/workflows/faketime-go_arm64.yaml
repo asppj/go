@@ -46,8 +46,8 @@ jobs:
       - name: Build the Docker image
         run: |
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-          docker buildx build --platform linux/$GOARCH -t asppj/go-builder:18.6faketime  --file Dockerfile .
-          docker push asppj/go-builder:18.6faketime
+          docker buildx build --platform linux/$GOARCH -t asppj/go-builder:18.6faketime_$GOARCH  --file Dockerfile .
+          docker push asppj/go-builder:18.6faketime_$GOARCH
         env:
           DOCKER_USERNAME: ${{secrets.DOCKER_USER}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASS}}
