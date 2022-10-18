@@ -12,7 +12,7 @@ RUN apt-get update && apt-get -y install git procps lsb-release  && \
         && rm -rf /var/lib/apt/lists/*
 
 ADD . .
-RUN export GOROOT_BOOTSTRAP="/workdir" && go env &&  ls -al && pwd
+RUN go env &&  ls -al && pwd
 RUN cd src && ./all.bash && cd - && \
       ls -al
 
