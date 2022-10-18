@@ -36,8 +36,8 @@ RUN apt-get update && apt-get -y install git procps lsb-release  && \
 
 
 #ENV GOROOT /go
-ADD builder:/workdir $GOROOT
-ADD builder:/workdir/bin $GOPATH/bin
-ADD builder:/workdir/pkg $GOPATH/pkg
+COPY --from=builder /workdir $GOROOT
+COPY --from=builder /workdir/bin $GOPATH/bin
+COPY --from=builder /workdir/pkg $GOPATH/pkg
 # Set the default shell to bash instead of sh
 
