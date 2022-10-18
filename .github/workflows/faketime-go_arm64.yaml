@@ -29,6 +29,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
       - name: Build the Docker image
         run: |
+          ls -al && pwd
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
           docker buildx build --platform linux/arm64 -t asppj/go-builder:18.6faketime  --file Dockerfile . --push
           # docker buildx build --platform linux/arm64,linux/amd64 -t asppj/go-builder:18.6faketime  --file Dockerfile . --push
