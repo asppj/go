@@ -10,6 +10,9 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [ cmd64, aarch64 ]
     steps:
 
       - name: Set up Go 1.x
@@ -34,9 +37,9 @@ jobs:
           ls -al
       - name: Build the Docker image
         run: |
-          docker build . --file Dockerfile --tag asppj/go-builder:18.4faketime
+          docker build . --file Dockerfile --tag asppj/go-builder:18.5faketime
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-          docker push asppj/go-builder:18.4faketime
+          docker push asppj/go-builder:18.5faketime
         env:
           DOCKER_USERNAME: ${{secrets.DOCKER_USER}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASS}}
