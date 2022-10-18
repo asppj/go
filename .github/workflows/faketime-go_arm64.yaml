@@ -2,9 +2,9 @@ name: Faketime-Go
 
 on:
   push:
-    branches: [ 18faketime]
+    branches: [ release/* ]
   pull_request:
-    branches: [ 18faketime]
+    branches: [ release/* ]
 
 jobs:
   build:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        arch: [ X64, ARM64 ]
+        arch: [ amd64, arm64 ]
         os: [ ubuntu-20.04 ]
     steps:
 
@@ -31,17 +31,20 @@ jobs:
         run: |
           export GOROOT_BOOTSTRAP=`pwd`
           export CGO_ENABLE=0
+          uname -a
           go env
           ls 
           pwd
-
+          export GOARCH=${{matrix.arch}}
+          env
           cd src && ./all.bash && cd -
           ls -al
       - name: Build the Docker image
         run: |
-          docker build . --file Dockerfile --tag asppj/go-builder:18.5faketime
+#          docker build . --file Dockerfile --tag asppj/go-builder:18.5faketime
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-          docker push asppj/go-builder:18.5faketime
+          docker buildx build --platform linux/${{matrix.arch}} -t asppj/go-builder:18.6faketime  --file Dockerfile .
+          docker push asppj/go-builder:18.6faketime
         env:
           DOCKER_USERNAME: ${{secrets.DOCKER_USER}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASS}}
