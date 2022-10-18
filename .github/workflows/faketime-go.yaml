@@ -9,10 +9,12 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+#    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        arch: [ amd64, aarch64 ]
+        arch: [ X64, ARM64 ]
+        os: [ ubuntu-20.04 ]
     steps:
 
       - name: Set up Go 1.x
