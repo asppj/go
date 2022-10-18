@@ -5,8 +5,7 @@ on:
     branches: [ release/* ]
   pull_request:
     branches: [ release/* ]
-env:
-  GOARCH: arm64
+
 jobs:
   build:
     name: Build
