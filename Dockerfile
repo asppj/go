@@ -8,7 +8,7 @@ FROM golang:1.18
 
 
 # Install git, process tools, lsb-release (common in install instructions for CLIs)
-RUN apt-get update && apt-get -y install git procps lsb-release build-base openssh bash curl tzdata ca-certificates && \
+RUN apt-get update && apt-get -y install git procps lsb-release  && \
     apt-get autoremove -y \
         && apt-get clean -y \
         && rm -rf /var/lib/apt/lists/*
