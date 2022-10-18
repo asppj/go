@@ -5,7 +5,8 @@ on:
     branches: [ release/* ]
   pull_request:
     branches: [ release/* ]
-
+env:
+  GOARCH: arm64
 jobs:
   build:
     name: Build
@@ -13,7 +14,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        arch: [ amd64, arm64 ]
         os: [ ubuntu-20.04 ]
     steps:
 
@@ -38,8 +38,7 @@ jobs:
           env
           cd src && ./all.bash && cd -
           ls -al
-        env:
-          GOARCH: ${{ matrix.arch }}
+
       - name: Build the Docker image
         run: |
 #          docker build . --file Dockerfile --tag asppj/go-builder:18.5faketime
@@ -49,7 +48,6 @@ jobs:
         env:
           DOCKER_USERNAME: ${{secrets.DOCKER_USER}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASS}}
-          GOARCH: ${{ matrix.arch }}
 
       # - name: Create Release
       #   id: create_release
