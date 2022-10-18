@@ -13,7 +13,6 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-20.04 ]
-        arch: [ arm64, amd64 ]
     steps:
       - name: Set up QEMU
         id: qemu
@@ -31,27 +30,15 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
-      - name: build by all.bash
-        run: |
-          export GOROOT_BOOTSTRAP=`pwd`
-          export CGO_ENABLE=0
-          go env
-          ls 
-          pwd
 
-          cd src && ./all.bash && cd -
-          ls -al
-        env:
-          GOARCH: ${{ matrix.arch }}
       - name: Build the Docker image
         run: |
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-          docker buildx build --platform linux/$GOARCH -t asppj/go-builder:18.6faketime_$GOARCH  --file Dockerfile .
-          docker push asppj/go-builder:18.6faketime_$GOARCH
+          docker buildx build --platform linux/arm64 linux/amd64 -t asppj/go-builder:18.6faketime  --file Dockerfile . --push
         env:
           DOCKER_USERNAME: ${{secrets.DOCKER_USER}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASS}}
-          GOARCH: ${{ matrix.arch }}
+          CGO_ENABLED: "0"
 
 
       # - name: Create Release

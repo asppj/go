@@ -2,6 +2,20 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See https://go.microsoft.com/fwlink/?linkid=2090316 for license information.
 #-------------------------------------------------------------------------------------------------------------
+FROM golang:1.18 as builder
+
+WORKDIR /workdir
+
+RUN apt-get update && apt-get -y install git procps lsb-release  && \
+    apt-get autoremove -y \
+        && apt-get clean -y \
+        && rm -rf /var/lib/apt/lists/*
+
+ADD . .
+RUN export GOROOT_BOOTSTRAP=`pwd` && go env &&  ls && pwd && \
+      cd src && ./all.bash && cd - && \
+      ls -al
+
 
 FROM golang:1.18
 #ENV GOPROXY https://goproxy.cn,direct
@@ -22,8 +36,8 @@ RUN apt-get update && apt-get -y install git procps lsb-release  && \
 
 
 #ENV GOROOT /go
-ADD . $GOROOT
-ADD bin $GOPATH/bin
-ADD pkg $GOPATH/pkg
+ADD builder:/workdir $GOROOT
+ADD builder:/workdir/bin $GOPATH/bin
+ADD builder:/workdir/pkg $GOPATH/pkg
 # Set the default shell to bash instead of sh
 
