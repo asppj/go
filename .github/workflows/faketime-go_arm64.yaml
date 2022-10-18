@@ -10,7 +10,6 @@ env:
 jobs:
   build:
     name: Build
-#    runs-on: ubuntu-latest
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -39,7 +38,6 @@ jobs:
           ls -al
       - name: Build the Docker image
         run: |
-#          docker build . --file Dockerfile --tag asppj/go-builder:18.5faketime
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
           docker buildx build --platform linux/$GOARCH -t asppj/go-builder:18.6faketime  --file Dockerfile .
           docker push asppj/go-builder:18.6faketime
