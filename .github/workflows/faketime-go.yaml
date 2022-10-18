@@ -2,9 +2,9 @@ name: Faketime-Go
 
 on:
   push:
-    branches: [ 18faketime ]
+    branches: [ 18faketime,release/* ]
   pull_request:
-    branches: [ 18faketime ]
+    branches: [ 18faketime,release/* ]
 
 jobs:
   build:
