@@ -45,12 +45,13 @@ jobs:
           # arm64
           export GOARCH=arm64
           cd src && ./all.bash && cd -
+          mkdir -p arm64
           ls -al
-          cp -r . arm64
           ls ./ | grep -v arm64 | xargs -i cp -r ./{} arm64/
           # amd64
           export GOARCH=amd64
           cd src && ./all.bash && cd -
+          mkdir -p amd64
           ls -al
           ls ./ | grep -v amd64|grep -v arm64 | xargs -i cp -r ./{} amd64/
           ls -al amd64
