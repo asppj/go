@@ -2,7 +2,7 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See https://go.microsoft.com/fwlink/?linkid=2090316 for license information.
 #-------------------------------------------------------------------------------------------------------------
-FROM golang:1.18 as builder
+FROM --platform=$TARGETPLATFORM golang:1.18 as builder
 
 WORKDIR /workdir
 
@@ -17,7 +17,7 @@ RUN cd src && ./all.bash && cd - && \
       ls -al
 
 
-FROM golang:1.18
+FROM --platform=$TARGETPLATFORM golang:1.18
 #ENV GOPROXY https://goproxy.cn,direct
 
 
