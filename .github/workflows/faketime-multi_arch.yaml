@@ -43,7 +43,8 @@ jobs:
           pwd
           # arm64
           export GOARCH=arm64
-          cd src && ./all.bash 
+          cd src 
+          ./all.bash 
           cd ..
           mkdir -p arm64
           pwd && ls -al
@@ -51,7 +52,9 @@ jobs:
           pwd && ls -alh
           # amd64
           export GOARCH=amd64
-          cd src && ./all.bash
+          cd src 
+          pwd
+          ./all.bash
           cd ..
           mkdir -p amd64
           pwd && ls -al
