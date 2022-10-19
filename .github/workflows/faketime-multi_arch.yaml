@@ -47,12 +47,12 @@ jobs:
           cd src && ./all.bash && cd -
           ls -al
           cp -r . arm64
-          ls -al arm64
+          ls ./ | grep -v arm64 | xargs -i cp -r ./{} arm64/
           # amd64
           export GOARCH=amd64
           cd src && ./all.bash && cd -
           ls -al
-          cp -r . amd64
+          ls ./ | grep -v amd64|grep -v arm64 | xargs -i cp -r ./{} amd64/
           ls -al amd64
 
       - name: Build the Docker image
