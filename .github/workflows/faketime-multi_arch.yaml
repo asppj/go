@@ -44,7 +44,7 @@ jobs:
           # arm64
           export GOARCH=arm64
           cd src 
-          ./all.bash 
+          GOARCH=arm64 ./all.bash 
           cd ..
           mkdir -p arm64
           pwd && ls -al
@@ -54,7 +54,7 @@ jobs:
           export GOARCH=amd64
           cd src 
           pwd
-          ./all.bash
+          GOARCH=amd64 ./all.bash
           cd ..
           mkdir -p amd64
           pwd && ls -al
@@ -66,7 +66,7 @@ jobs:
         run: |
           ls -al && pwd
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-          docker buildx build --platform linux/arm64,linux/amd64 -t asppj/go-builder:18.7faketime  --file Dockerfile-multiarch . --push
+          docker buildx build --platform linux/arm64,linux/amd64 -t asppj/go-builder:1.82.1faketime  --file Dockerfile-multiarch . --push
           docker images
         env:
           DOCKER_USERNAME: ${{secrets.DOCKER_USER}}
